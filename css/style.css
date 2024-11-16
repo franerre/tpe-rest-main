@@ -1,0 +1,14 @@
+.finalizada span {
+    opacity: .6;
+    text-decoration: line-through;
+}
+
+#id_equipo {
+    color: black; 
+}
+.imagen-jugador, .imagen-equipo {
+    width: 50px; 
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
