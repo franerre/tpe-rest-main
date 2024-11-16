@@ -263,7 +263,7 @@ Se modifica y se guarda en la base de datos
 ```http
   GET /tpe-rest-main/api/equipos?sort=id&order=ASC (ASCENDENTE).
   GET /tpe-rest-main/api/equipos?sort=id&order=DESC (DESCENDENTE).
-  Si queres que se muestre ordenado por otro campo, solo cambia id por equipo, liga o pais.
+  Si queres que se muestre ordenado por otro campo, solo cambia id por equipo, liga, pais o imagen.
 ```
   #### ejemplo:
 
@@ -344,7 +344,7 @@ DESCENDENTE:
 ```http
   GET /tpe-rest-main/api/jugadores?sort=id&order=ASC (ASCENDENTE).
   GET /tpe-rest-main/api/jugadores?sort=id&order=DESC (DESCENDENTE).
-  Si queres que se muestre ordenado por otro campo, solo cambia id por nombre, apellido o id_equipo.
+  Si queres que se muestre ordenado por otro campo, solo cambia id por nombre, apellido, id_equipo o imagen_jugador.
 ```
   #### ejemplo:
 
