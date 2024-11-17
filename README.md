@@ -11,7 +11,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### OBTENER TODOS LOS EQUIPOS
 
 ```http
-  GET /tpe-rest-main/api/equipos
+  GET localhost/tpe-rest-main/api/equipos
 ```
 #### ejemplo:
 
@@ -45,7 +45,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### OBTENER TODO LOS JUGADORES
 
 ```http
-  GET /tpe-rest-main/api/jugadores
+  GET localhost/tpe-rest-main/api/jugadores
 ```
 #### ejemplo:
 
@@ -91,7 +91,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### OBTENER EQUIPO POR ID
 
 ```http
-  GET /tpe-rest-main/api/equipos/3
+  GET localhost/tpe-rest-main/api/equipos/3
 ```
 #### ejemplo:
 
@@ -109,7 +109,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### OBTENER JUGADOR POR ID
 
 ```http
-  GET /tpe-rest-main/api/jugadores/3
+  GET localhost/tpe-rest-main/api/jugadores/3
 ```
 #### ejemplo:
 
@@ -127,7 +127,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### CREAR UN NUEVO EQUIPO
 
 ```http
-  POST /tpe-rest-main/api/equipos/
+  POST localhost/tpe-rest-main/api/equipos/
 ```
 #### ejemplo:
 
@@ -145,7 +145,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### CREAR UN NUEVO JUGADOR
 
 ```http
-  POST /tpe-rest-main/api/jugadores/
+  POST localhost/tpe-rest-main/api/jugadores/
 ```
 #### ejemplo:
 
@@ -163,7 +163,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### ELIMINAR UN EQUIPO 
 
 ```http
-  DELETE /tpe-rest-main/api/equipos/3
+  DELETE localhost/tpe-rest-main/api/equipos/3
 ```
 #### ejemplo:
 
@@ -177,7 +177,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### ELIMINAR UN JUGADOR 
 
 ```http
-  DELETE /tpe-rest-main/api/jugadores/3
+  DELETE localhost/tpe-rest-main/api/jugadores/3
 ```
 #### ejemplo:
 
@@ -191,7 +191,7 @@ se puede editar, eliminar, crear entre algunas opciones.
 ### MODIFICAR UN EQUIPO
 
 ```http
-  PUT /tpe-rest-main/api/equipos/3
+  PUT localhost/tpe-rest-main/api/equipos/3
 ```
 #### ejemplo:
 
@@ -211,7 +211,7 @@ Se modifica y se guarda en la base de datos
 ### MODIFICAR UN JUGADOR
 
 ```http
-  PUT /tpe-rest-main/api/jugadores/3
+  PUT localhost/tpe-rest-main/api/jugadores/3
 ```
 #### ejemplo:
 
@@ -230,7 +230,8 @@ Se modifica y se guarda en la base de datos
 ### OBTENER NOMBRE DE UN EQUIPO
 
 ```http
-  GET /tpe-rest-main/api/equipos/3/equipo (si queres saber la liga reemplaza equipo por "liga" lo mismo para pais, "pais" )
+  GET localhost/tpe-rest-main/api/equipos/3/equipo 
+  (si queres saber la liga reemplaza equipo por "liga" lo mismo para pais, "pais" )
 ```
 #### ejemplo:
 
@@ -246,7 +247,8 @@ Se modifica y se guarda en la base de datos
 ### OBTENER NOMBRE DE UN JUGADOR
 
 ```http
-  GET /tpe-rest-main/api/jugadores/2/nombre (si queres saber el apellido reemplaza nombre por "apellido" lo mismo para id_equipo, "id_equipo")
+  GET localhost/tpe-rest-main/api/jugadores/2/nombre 
+  (si queres saber el apellido reemplaza nombre por "apellido" lo mismo para id_equipo, "id_equipo")
 ```
 #### ejemplo:
 
@@ -261,8 +263,8 @@ Se modifica y se guarda en la base de datos
 ### ORDENAR EQUIPOS DE FORMAR ASCENDENTE O DESCENDENTE
 
 ```http
-  GET /tpe-rest-main/api/equipos?sort=id&order=ASC (ASCENDENTE).
-  GET /tpe-rest-main/api/equipos?sort=id&order=DESC (DESCENDENTE).
+  GET localhost/tpe-rest-main/api/equipos?sort=id&order=ASC (ASCENDENTE).
+  GET localhost/tpe-rest-main/api/equipos?sort=id&order=DESC (DESCENDENTE).
   Si queres que se muestre ordenado por otro campo, solo cambia id por equipo, liga, pais o imagen.
 ```
   #### ejemplo:
@@ -342,8 +344,8 @@ DESCENDENTE:
 ### ORDENAR JUGADORES DE FORMAR ASCENDENTE O DESCENDENTE
 
 ```http
-  GET /tpe-rest-main/api/jugadores?sort=id&order=ASC (ASCENDENTE).
-  GET /tpe-rest-main/api/jugadores?sort=id&order=DESC (DESCENDENTE).
+  GET localhost/tpe-rest-main/api/jugadores?sort=id&order=ASC (ASCENDENTE).
+  GET localhost/tpe-rest-main/api/jugadores?sort=id&order=DESC (DESCENDENTE).
   Si queres que se muestre ordenado por otro campo, solo cambia id por nombre, apellido, id_equipo o imagen_jugador.
 ```
   #### ejemplo:
