@@ -418,3 +418,95 @@ DESCENDENTE:
     .
     .
 ]
+```
+### PAGINAR EQUIPOS
+```http
+  GET localhost/tpe-rest-main/api/equipos?offset=0&limit=5
+  Si queres realizar pruebas solo modifica set=0, limit=5 por el rango que quieras. 
+```
+  #### ejemplo:
+
+```json
+ [
+    {
+        "id": 0,
+        "equipo": "Manchester City",
+        "liga": "Premier League",
+        "pais": "Inglaterra",
+        "imagen": "city.png"
+    },
+    {
+        "id": 1,
+        "equipo": "Real Madrid",
+        "liga": "La Liga",
+        "pais": "España",
+        "imagen": "real.png"
+    },
+    {
+        "id": 2,
+        "equipo": "Inter de Milán ",
+        "liga": "Serie A",
+        "pais": "Italia",
+        "imagen": "inter.png"
+    },
+    {
+        "id": 3,
+        "equipo": "Napoli",
+        "liga": "Serie A",
+        "pais": "Italia",
+        "imagen": "napolii.png"
+    },
+    {
+        "id": 4,
+        "equipo": "Atletico Madrid",
+        "liga": "La Liga",
+        "pais": "España",
+        "imagen": "atletico.png"
+    }
+]
+```
+### PAGINAR JUGADORES
+```http
+  GET localhost/tpe-rest-main/api/jugadores?offset=0&limit=5
+  Si queres realizar pruebas solo modifica set=0, limit=5 por el rango que quieras. 
+```
+  #### ejemplo:
+
+```json
+[
+    {
+        "id": 1,
+        "nombre": "Phil",
+        "apellido": "Foden",
+        "id_equipo": 0,
+        "imagen_jugador": "foden.png"
+    },
+    {
+        "id": 2,
+        "nombre": "Kevin",
+        "apellido": "De Bruyne",
+        "id_equipo": 0,
+        "imagen_jugador": "De Bruyne.png"
+    },
+    {
+        "id": 3,
+        "nombre": "Earling",
+        "apellido": "Haaland",
+        "id_equipo": 0,
+        "imagen_jugador": "Haaland.png"
+    },
+    {
+        "id": 4,
+        "nombre": "Robert ",
+        "apellido": "Lewandowski",
+        "id_equipo": 9,
+        "imagen_jugador": "Lewandowski.png"
+    },
+    {
+        "id": 5,
+        "nombre": "Ferran ",
+        "apellido": "Torres",
+        "id_equipo": 9,
+        "imagen_jugador": "Torres.png"
+    }
+]

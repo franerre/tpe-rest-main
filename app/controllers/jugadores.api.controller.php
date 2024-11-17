@@ -16,9 +16,12 @@ class JugadoresApiController extends ApiController {
     function get($params = []) {
         $sort = $_GET['sort'] ?? null; 
         $order = $_GET['order'] ?? 'ASC'; // Tipo de orden (ASC o DESC)
+        $offset = $_GET['offset'] ?? 0; // Valor por defecto es 0
+        $limit = $_GET['limit'] ?? 10; // Valor por defecto es 10
         
         if (empty($params)) {
-            $jugadores = $this->model->getJugadoresOrderBy($sort, $order);
+            // Obtener los jugadores paginados
+            $jugadores = $this->model->getJugadoresPaginated($offset, $limit, $sort, $order);
             $this->view->response($jugadores, 200);
         } else {
             $jugador = $this->model->getJugador($params[':ID']);
@@ -55,6 +58,7 @@ class JugadoresApiController extends ApiController {
             }
         }
     }
+    
     
     
 

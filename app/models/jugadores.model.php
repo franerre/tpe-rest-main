@@ -44,6 +44,34 @@ class JugadorModel  extends Model {
         return $players;
     }
     
+    function getJugadoresPaginated($offset, $limit, $sort = 'id', $order = 'ASC') {
+        
+        $validSortFields = ['id', 'nombre', 'apellido', 'id_equipo'];
+        if (!in_array($sort, $validSortFields)) {
+            $sort = 'id';  
+        }
+    
+        if ($order !== 'ASC' && $order !== 'DESC') {
+            $order = 'ASC';  
+        }
+    
+
+        $offset = (int) $offset;
+        $limit = (int) $limit;
+    
+        // Consulta SQL con LIMIT y OFFSET
+        $query = $this->db->prepare('SELECT * FROM jugadores ORDER BY ' . $sort . ' ' . $order . ' LIMIT :limit OFFSET :offset');
+        $query->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $query->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $query->execute();
+    
+      
+        $players = $query->fetchAll(PDO::FETCH_OBJ);
+    
+        return $players;
+    }
+    
+    
 
    
 

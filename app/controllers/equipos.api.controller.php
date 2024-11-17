@@ -12,34 +12,31 @@ class EquipoApiController extends ApiController {
     }
     
     function get($params = []) {
-        $sort = $_GET['sort'] ?? null;  
+        $sort = $_GET['sort'] ?? null; 
         $order = $_GET['order'] ?? 'ASC'; // Tipo de orden (ASC o DESC)
+        $offset = $_GET['offset'] ?? 0; // Valor por defecto es 0
+        $limit = $_GET['limit'] ?? 10; // Valor por defecto es 10
         
         if (empty($params)) {
-            
-            if ($sort) {
-                $equipos = $this->model->getEquiposOrderBy($sort, $order);
-            } else {
-                $equipos = $this->model->getEquipos(); 
-            }
+            // Obtener los equipos paginados
+            $equipos = $this->model->getEquiposPaginated($offset, $limit, $sort, $order);
             $this->view->response($equipos, 200);
         } else {
-            // Lógica para obtener un equipo específico
-            $Equipo = $this->model->getEquipo($params[':ID']);
-            if (!empty($Equipo)) {
+            $equipo = $this->model->getEquipo($params[':ID']);
+            if (!empty($equipo)) {
                 if (isset($params[':subrecurso']) && $params[':subrecurso']) {
                     switch ($params[':subrecurso']) {
                         case 'equipo':
-                            $this->view->response($Equipo->equipo, 200);
+                            $this->view->response($equipo->equipo, 200);
                             break;
                         case 'liga':
-                            $this->view->response($Equipo->liga, 200);
+                            $this->view->response($equipo->liga, 200);
                             break;
                         case 'pais':
-                            $this->view->response($Equipo->pais, 200);
+                            $this->view->response($equipo->pais, 200);
                             break;
                         case 'imagen':
-                            $this->view->response($Equipo->imagen, 200);
+                            $this->view->response($equipo->imagen, 200);
                             break;
                         default:
                             $this->view->response(
@@ -49,7 +46,7 @@ class EquipoApiController extends ApiController {
                             break;
                     }
                 } else {
-                    $this->view->response($Equipo, 200);
+                    $this->view->response($equipo, 200);
                 }
             } else {
                 $this->view->response(
@@ -59,6 +56,9 @@ class EquipoApiController extends ApiController {
             }
         }
     }
+    
+    
+    
 
     function delete($params = []) {
         $id = $params[':ID'];

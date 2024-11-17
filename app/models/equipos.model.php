@@ -31,7 +31,7 @@ class EquipoModel  extends Model {
         $columnasPermitidas = ['equipo', 'liga', 'pais', 'id'];
         $ordenPermitido = ['ASC', 'DESC'];
     
-        // Si el campo o el orden no son válidos, asignar valores predeterminados
+       
         if (!in_array($campo, $columnasPermitidas)) {
             $campo = 'equipo';
         }
@@ -39,15 +39,43 @@ class EquipoModel  extends Model {
             $orden = 'ASC';
         }
     
-        // Preparar la consulta SQL con orden dinámico
         $query = $this->db->prepare("SELECT * FROM equipos ORDER BY $campo $orden");
         $query->execute();
     
-        // Obtener los resultados como un arreglo de objetos
+        
         $teams = $query->fetchAll(PDO::FETCH_OBJ);
     
         return $teams;
     }
+
+    function getEquiposPaginated($offset, $limit, $sort = 'id', $order = 'ASC') {
+        
+        $validSortFields = ['id', 'equipo', 'liga', 'pais'];
+        if (!in_array($sort, $validSortFields)) {
+            $sort = 'id';  
+        }
+    
+        if ($order !== 'ASC' && $order !== 'DESC') {
+            $order = 'ASC';  
+        }
+    
+        
+        $offset = (int) $offset;
+        $limit = (int) $limit;
+    
+        // Consulta SQL con LIMIT y OFFSET
+        $query = $this->db->prepare('SELECT * FROM equipos ORDER BY ' . $sort . ' ' . $order . ' LIMIT :limit OFFSET :offset');
+        $query->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $query->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $query->execute();
+    
+       
+        $equipos = $query->fetchAll(PDO::FETCH_OBJ);
+    
+        return $equipos;
+    }
+    
+    
     
 
     

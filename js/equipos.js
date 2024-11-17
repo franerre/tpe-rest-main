@@ -6,9 +6,9 @@ let teams = [];
 let form = document.querySelector('#team-form');
 form.addEventListener('submit', insertEquipo);
 
-async function getAll() {
+async function getAll(page = 1, limit = 10) {
     try {
-        let response = await fetch(URL);
+        let response = await fetch(`${URL}?page=${page}&limit=${limit}`);
         if (!response.ok) {
             throw new Error('Recurso no existe');
         }
