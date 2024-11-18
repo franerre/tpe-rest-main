@@ -72,22 +72,27 @@ class EquipoModel  extends Model {
     }
 
     public function getEquiposFiltered($filter, $value, $offset, $limit, $sort, $order) {
-        $allowedSortFields = ['equipo', 'liga', 'pais', 'id']; 
+        // Definir los filtros permitidos
+        $allowedFilters = ['equipo', 'liga', 'pais'];  // Asegúrate de agregar todos los filtros válidos que necesites
+    
+        // Verificar si el filtro proporcionado está en los filtros permitidos
         if (!in_array($filter, $allowedFilters)) {
-            return []; 
+            return [];  // Si el filtro no es válido, retorna un array vacío
         }
     
-        
+        // Construcción de la consulta con el filtro
         $query = "SELECT * FROM equipos WHERE $filter = ? ORDER BY $sort $order LIMIT ? OFFSET ?";
         $stmt = $this->db->prepare($query);
     
-       
+        // Enlazar los parámetros de la consulta
         $stmt->bindValue(1, $value, PDO::PARAM_STR);
         $stmt->bindValue(2, (int)$limit, PDO::PARAM_INT);
         $stmt->bindValue(3, (int)$offset, PDO::PARAM_INT);
     
+        // Ejecutar la consulta
         $stmt->execute();
     
+        // Retornar los resultados
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     

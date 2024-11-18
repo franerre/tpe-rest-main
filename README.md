@@ -556,14 +556,8 @@ DESCENDENTE:
   #### ejemplo:
 
 ```json
-[
-    {
-        "id": 18,
-        "nombre": "Antoine ",
-        "apellido": "Griezmann",
-        "id_equipo": 4,
-        "imagen_jugador": "Griezmann.png"
-    },
+
+   [
     {
         "id": 16,
         "nombre": "Julian",
@@ -577,5 +571,12 @@ DESCENDENTE:
         "apellido": "De Paul",
         "id_equipo": 4,
         "imagen_jugador": "de paul.png"
+    },
+    {
+        "id": 18,
+        "nombre": "Antoine ",
+        "apellido": "Griezmann",
+        "id_equipo": 4,
+        "imagen_jugador": "Griezmann.png"
     }
 ]
