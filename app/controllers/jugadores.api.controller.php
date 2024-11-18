@@ -15,7 +15,7 @@ class JugadoresApiController extends ApiController {
     
     function get($params = []) {
         
-        $sort = $_GET['sort'] ?? 'nombre';  
+        $sort = $_GET['sort'] ?? 'id';  
         $order = $_GET['order'] ?? 'ASC';   
         $offset = $_GET['offset'] ?? 0;     
         $limit = $_GET['limit'] ?? 50;      
@@ -28,7 +28,7 @@ class JugadoresApiController extends ApiController {
         }
     
         
-        $allowedSortFields = ['nombre', 'equipo', 'liga']; 
+        $allowedSortFields = ['id','nombre', 'equipo', 'liga', 'imagen_jugador']; 
         if (!in_array($sort, $allowedSortFields)) {
             $sort = 'nombre'; 
         }

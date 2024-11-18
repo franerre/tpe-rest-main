@@ -64,7 +64,7 @@ class JugadorModel  extends Model {
     
     public function getJugadoresFiltered($filter, $value, $offset, $limit, $sort, $order) {
         
-        $allowedFilters = ['nombre', 'apellido', 'id_equipo', 'imagen_jugador']; 
+        $allowedFilters = ['id', 'nombre', 'apellido', 'id_equipo', 'imagen_jugador']; 
         if (!in_array($filter, $allowedFilters)) {
             return []; 
         }

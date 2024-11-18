@@ -13,7 +13,7 @@ class EquipoApiController extends ApiController {
     
     function get($params = []) {
         
-        $sort = $_GET['sort'] ?? 'equipo';
+        $sort = $_GET['sort'] ?? 'id';
         $order = $_GET['order'] ?? 'ASC'; 
         $offset = $_GET['offset'] ?? 0;  
         $limit = $_GET['limit'] ?? 30;   
@@ -26,7 +26,7 @@ class EquipoApiController extends ApiController {
         }
     
         
-        $allowedSortFields = ['equipo', 'liga', 'pais']; 
+        $allowedSortFields = ['id','equipo', 'liga', 'pais', 'imagen']; 
         if (!in_array($sort, $allowedSortFields)) {
             $sort = 'equipo'; 
         }

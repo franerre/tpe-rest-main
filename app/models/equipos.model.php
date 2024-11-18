@@ -72,7 +72,7 @@ class EquipoModel  extends Model {
     }
 
     public function getEquiposFiltered($filter, $value, $offset, $limit, $sort, $order) {
-        $allowedFilters = ['liga', 'pais', 'equipo']; 
+        $allowedSortFields = ['equipo', 'liga', 'pais', 'id']; 
         if (!in_array($filter, $allowedFilters)) {
             return []; 
         }
