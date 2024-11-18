@@ -80,13 +80,13 @@ function fillTeamsSelect() {
     select.innerHTML = "";
 
     for (const team of teams) {
-        console.log("Team Object: ", team); // Añadido para depurar
+        console.log("Team Object: ", team); 
         let option = document.createElement('option');
-        option.value = team.id_equipo || team.id; // Ajusta según la estructura real de la respuesta
+        option.value = team.id_equipo || team.id; 
         option.textContent = team.equipo;
         select.appendChild(option);
     }
-    console.log("fillTeamsSelect called"); // Añadido para depurar
+    console.log("fillTeamsSelect called"); 
 }
 
 

@@ -12,14 +12,47 @@ class EquipoApiController extends ApiController {
     }
     
     function get($params = []) {
-        $sort = $_GET['sort'] ?? null; 
-        $order = $_GET['order'] ?? 'ASC'; // Tipo de orden (ASC o DESC)
-        $offset = $_GET['offset'] ?? 0; // Valor por defecto es 0
-        $limit = $_GET['limit'] ?? 10; // Valor por defecto es 10
         
+        $sort = $_GET['sort'] ?? 'equipo';
+        $order = $_GET['order'] ?? 'ASC'; 
+        $offset = $_GET['offset'] ?? 0;  
+        $limit = $_GET['limit'] ?? 30;   
+        $filter = $_GET['filter'] ?? null; 
+        $value = $_GET['value'] ?? null; 
+    
+        $allowedOrders = ['ASC', 'DESC'];
+        if (!in_array(strtoupper($order), $allowedOrders)) {
+            $order = 'ASC'; 
+        }
+    
+        
+        $allowedSortFields = ['equipo', 'liga', 'pais']; 
+        if (!in_array($sort, $allowedSortFields)) {
+            $sort = 'equipo'; 
+        }
+    
         if (empty($params)) {
-            // Obtener los equipos paginados
-            $equipos = $this->model->getEquiposPaginated($offset, $limit, $sort, $order);
+            if ($filter && $value) {
+                
+                $equipos = $this->model->getEquiposFiltered($filter, $value, $offset, $limit, $sort, $order);
+                
+                
+                if (empty($equipos)) {
+                   
+                    if ($filter == 'liga') {
+                        $this->view->response("No hay ningún equipo con la liga '$value'.", 404);
+                    } elseif ($filter == 'pais') {
+                        $this->view->response("No hay ningún equipo con el pais '$value'.", 404);
+                    } else {
+                        $this->view->response("No hay ningún equipo con el filtro '$filter' y el valor '$value'.", 404);
+                    }
+                    return;
+                }
+            } else {
+                
+                $equipos = $this->model->getEquiposPaginated($offset, $limit, $sort, $order);
+            }
+    
             $this->view->response($equipos, 200);
         } else {
             $equipo = $this->model->getEquipo($params[':ID']);
@@ -58,7 +91,23 @@ class EquipoApiController extends ApiController {
     }
     
     
+    public function getEquiposFiltered($filter, $value, $offset, $limit, $sort, $order) {
+        $allowedFilters = ['liga', 'pais', 'equipo']; 
+        if (!in_array($filter, $allowedFilters)) {
+            return []; 
+        }
     
+        $query = "SELECT * FROM equipos WHERE $filter = ? ORDER BY $sort $order LIMIT ? OFFSET ?";
+        $stmt = $this->db->prepare($query);
+    
+        
+        $stmt->bindValue(1, $value, PDO::PARAM_STR);
+        $stmt->bindValue(2, (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(3, (int)$offset, PDO::PARAM_INT);
+    
+        
+        $stmt->execute();
+    }
 
     function delete($params = []) {
         $id = $params[':ID'];

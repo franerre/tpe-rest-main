@@ -11,11 +11,11 @@
         }
 
         function deploy() {
-            // Chequear si hay tablas
+            
             $query = $this->db->query('SHOW TABLES');
-            $tables = $query->fetchAll(); // Nos devuelve todas las tablas de la db
+            $tables = $query->fetchAll(); 
             if(count($tables)==0) {
-                // Si no hay crearlas
+             
                 $sql =<<<END
                 --
                 -- Estructura de tabla para la tabla `jugadores`

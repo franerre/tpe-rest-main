@@ -231,7 +231,7 @@ Se modifica y se guarda en la base de datos
 
 ```http
   GET localhost/tpe-rest-main/api/equipos/3/equipo 
-  (si queres saber la liga reemplaza equipo por "liga" lo mismo para pais, "pais" )
+  (si queres saber la liga, pais o imagen reemplaza equipo por "liga", "pais", o "imagen")
 ```
 #### ejemplo:
 
@@ -248,7 +248,7 @@ Se modifica y se guarda en la base de datos
 
 ```http
   GET localhost/tpe-rest-main/api/jugadores/2/nombre 
-  (si queres saber el apellido reemplaza nombre por "apellido" lo mismo para id_equipo, "id_equipo")
+  (si queres saber el apellido, id_equipo o la imagen del jugador remplaza nombre por "apellido", "id_equipo", o "imagen_jugador")
 ```
 #### ejemplo:
 
@@ -510,5 +510,72 @@ DESCENDENTE:
         "apellido": "Torres",
         "id_equipo": 9,
         "imagen_jugador": "Torres.png"
+    }
+]
+```
+### FILTRAR COLECCION ENTERA MEDIANTE UN CAMPO DE EQUIPOS
+```http
+
+  GET localhost/tpe-rest-main/api/equipos?filter=liga&value=Premier League
+
+  para realizar mas pruebas, cambiamos liga por pais y premier league por un pais ej(España, Inglaterra, etc)
+```
+  #### ejemplo:
+
+```json
+[
+    {
+        "id": 0,
+        "equipo": "Manchester City",
+        "liga": "Premier League",
+        "pais": "Inglaterra",
+        "imagen": "city.png"
+    },
+    {
+        "id": 7,
+        "equipo": "Liverpool",
+        "liga": "Premier League",
+        "pais": "Inglaterra",
+        "imagen": "liverpol.png"
+    },
+    {
+        "id": 10,
+        "equipo": "Manchester United",
+        "liga": "Premier League",
+        "pais": "Inglaterra",
+        "imagen": "united.png"
+    }
+]
+```
+### FILTRAR COLECCION ENTERA MEDIANTE UN CAMPO DE JUGADORES
+```http
+
+  GET localhost/tpe-rest-main/api/jugadores?filter=id_equipo&value=4
+
+```
+  #### ejemplo:
+
+```json
+[
+    {
+        "id": 18,
+        "nombre": "Antoine ",
+        "apellido": "Griezmann",
+        "id_equipo": 4,
+        "imagen_jugador": "Griezmann.png"
+    },
+    {
+        "id": 16,
+        "nombre": "Julian",
+        "apellido": "Alvarez",
+        "id_equipo": 4,
+        "imagen_jugador": "araña.png"
+    },
+    {
+        "id": 17,
+        "nombre": "Rodrigo ",
+        "apellido": "De Paul",
+        "id_equipo": 4,
+        "imagen_jugador": "de paul.png"
     }
 ]

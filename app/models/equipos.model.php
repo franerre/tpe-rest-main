@@ -2,15 +2,12 @@
     require_once 'app/models/model.php';
 
 class EquipoModel  extends Model {  
-    /**
-     * Obtiene y devuelve de la base de datos todas las tareas.
-     */
-
+    
     function getEquipos() {
         $query = $this->db->prepare('SELECT * FROM equipos');
         $query->execute();
 
-        // $tasks es un arreglo de tareas
+       
         $teams = $query->fetchAll(PDO::FETCH_OBJ);
 
         return $teams;
@@ -20,14 +17,14 @@ class EquipoModel  extends Model {
         $query = $this->db->prepare('SELECT * FROM equipos WHERE id = ?');
         $query->execute([$id]);
 
-        // $task es una tarea sola
+        
         $team = $query->fetch(PDO::FETCH_OBJ);
 
         return $team;
     }
 
     function getEquiposOrderBy($campo, $orden = 'ASC') {
-        // Verificar que el campo y el orden sean válidos
+       
         $columnasPermitidas = ['equipo', 'liga', 'pais', 'id'];
         $ordenPermitido = ['ASC', 'DESC'];
     
@@ -62,8 +59,7 @@ class EquipoModel  extends Model {
         
         $offset = (int) $offset;
         $limit = (int) $limit;
-    
-        // Consulta SQL con LIMIT y OFFSET
+        
         $query = $this->db->prepare('SELECT * FROM equipos ORDER BY ' . $sort . ' ' . $order . ' LIMIT :limit OFFSET :offset');
         $query->bindParam(':limit', $limit, PDO::PARAM_INT);
         $query->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -74,11 +70,29 @@ class EquipoModel  extends Model {
     
         return $equipos;
     }
+
+    public function getEquiposFiltered($filter, $value, $offset, $limit, $sort, $order) {
+        $allowedFilters = ['liga', 'pais', 'equipo']; 
+        if (!in_array($filter, $allowedFilters)) {
+            return []; 
+        }
     
+        
+        $query = "SELECT * FROM equipos WHERE $filter = ? ORDER BY $sort $order LIMIT ? OFFSET ?";
+        $stmt = $this->db->prepare($query);
+    
+       
+        $stmt->bindValue(1, $value, PDO::PARAM_STR);
+        $stmt->bindValue(2, (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(3, (int)$offset, PDO::PARAM_INT);
+    
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
     
     
 
-    
     function insertEquipo($equipo, $liga, $pais, $imagen) {
         $query = $this->db->prepare('INSERT INTO equipos (equipo, liga, pais, imagen) VALUES(?,?,?,?)');
         $query->execute([$equipo, $liga, $pais, $imagen]);

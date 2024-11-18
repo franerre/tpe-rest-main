@@ -46,14 +46,14 @@ async function insertEquipo(e) {
         // Agrega el nuevo equipo al array
         teams.push(newTeam);
 
-        // Muestra los equipos actualizados en la página
+       
         showEquipos();
 
-        // Limpia el formulario
+       
         form.reset();
     } catch (error) {
         console.log(error);
-        // Mostrar mensaje de error al usuario si es necesario
+       
     }
 } 
 

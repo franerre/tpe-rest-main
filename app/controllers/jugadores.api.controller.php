@@ -14,19 +14,56 @@ class JugadoresApiController extends ApiController {
     }
     
     function get($params = []) {
-        $sort = $_GET['sort'] ?? null; 
-        $order = $_GET['order'] ?? 'ASC'; // Tipo de orden (ASC o DESC)
-        $offset = $_GET['offset'] ?? 0; // Valor por defecto es 0
-        $limit = $_GET['limit'] ?? 10; // Valor por defecto es 10
         
+        $sort = $_GET['sort'] ?? 'nombre';  
+        $order = $_GET['order'] ?? 'ASC';   
+        $offset = $_GET['offset'] ?? 0;     
+        $limit = $_GET['limit'] ?? 50;      
+        $filter = $_GET['filter'] ?? null;  
+        $value = $_GET['value'] ?? null;    
+    
+        $allowedOrders = ['ASC', 'DESC'];
+        if (!in_array(strtoupper($order), $allowedOrders)) {
+            $order = 'ASC'; 
+        }
+    
+        
+        $allowedSortFields = ['nombre', 'equipo', 'liga']; 
+        if (!in_array($sort, $allowedSortFields)) {
+            $sort = 'nombre'; 
+        }
+    
         if (empty($params)) {
-            // Obtener los jugadores paginados
-            $jugadores = $this->model->getJugadoresPaginated($offset, $limit, $sort, $order);
+            if ($filter && $value) {
+                
+                $jugadores = $this->model->getJugadoresFiltered($filter, $value, $offset, $limit, $sort, $order);
+                
+                
+                if (empty($jugadores)) {
+                    
+                    if ($filter == 'equipo') {
+                        $this->view->response("No hay ningún jugador con el equipo '$value'.", 404);
+                    } elseif ($filter == 'liga') {
+                        $this->view->response("No hay ningún jugador con la liga '$value'.", 404);
+                    } elseif ($filter == 'pais') {
+                        $this->view->response("No hay ningún jugador con el país '$value'.", 404);
+                    } else {
+                        $this->view->response("No hay ningún jugador con el filtro '$filter' y el valor '$value'.", 404);
+                    }
+                    return;
+                }
+            } else {
+                
+                $jugadores = $this->model->getJugadoresPaginated($offset, $limit, $sort, $order);
+            }
+    
             $this->view->response($jugadores, 200);
         } else {
+           
             $jugador = $this->model->getJugador($params[':ID']);
             if (!empty($jugador)) {
                 if (isset($params[':subrecurso']) && $params[':subrecurso']) {
+                    
                     switch ($params[':subrecurso']) {
                         case 'nombre':
                             $this->view->response($jugador->nombre, 200);
@@ -48,9 +85,11 @@ class JugadoresApiController extends ApiController {
                             break;
                     }
                 } else {
+                    
                     $this->view->response($jugador, 200);
                 }
             } else {
+                
                 $this->view->response(
                     'El jugador con el id=' . $params[':ID'] . ' no existe.',
                     404
@@ -58,8 +97,6 @@ class JugadoresApiController extends ApiController {
             }
         }
     }
-    
-    
     
 
     function delete($params = []) {
@@ -88,7 +125,7 @@ class JugadoresApiController extends ApiController {
         } else {
             $id = $this->model->insertJugador($nombre, $apellido, $id_equipo, $imagen_jugador);
 
-            // En una API REST, es buena práctica devolver el recurso creado
+            
             $jugador = $this->model->getJugador($id);
             $this->view->response($jugador, 201);
         }

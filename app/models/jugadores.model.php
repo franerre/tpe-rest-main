@@ -3,10 +3,7 @@
     require_once 'app/models/equipos.model.php';
 
 class JugadorModel  extends Model {  
-    /**
-     * Obtiene y devuelve de la base de datos todas las tareas.
-     */
-
+    
     function getJugadores() {
         $query = $this->db->prepare('SELECT * FROM jugadores');
         $query->execute();
@@ -29,11 +26,9 @@ class JugadorModel  extends Model {
     }
 
     function getJugadoresOrderBy($sort = null, $order = 'ASC') {
-        // Si no se recibe un campo por el cual ordenar, ordenar por id
-        $validSortFields = ['id', 'nombre', 'apellido', 'id_equipo'];  // Los campos válidos por los cuales se puede ordenar
-        
+        $validSortFields = ['id', 'nombre', 'apellido', 'id_equipo'];  
         if (!in_array($sort, $validSortFields)) {
-            $sort = 'id';  // Si el campo no es válido, se ordena por id por defecto
+            $sort = 'id';  
         }
     
         $query = $this->db->prepare('SELECT * FROM jugadores ORDER BY ' . $sort . ' ' . $order);
@@ -45,21 +40,17 @@ class JugadorModel  extends Model {
     }
     
     function getJugadoresPaginated($offset, $limit, $sort = 'id', $order = 'ASC') {
-        
         $validSortFields = ['id', 'nombre', 'apellido', 'id_equipo'];
         if (!in_array($sort, $validSortFields)) {
             $sort = 'id';  
-        }
-    
+        }   
         if ($order !== 'ASC' && $order !== 'DESC') {
             $order = 'ASC';  
         }
-    
 
         $offset = (int) $offset;
         $limit = (int) $limit;
     
-        // Consulta SQL con LIMIT y OFFSET
         $query = $this->db->prepare('SELECT * FROM jugadores ORDER BY ' . $sort . ' ' . $order . ' LIMIT :limit OFFSET :offset');
         $query->bindParam(':limit', $limit, PDO::PARAM_INT);
         $query->bindParam(':offset', $offset, PDO::PARAM_INT);
@@ -70,6 +61,29 @@ class JugadorModel  extends Model {
     
         return $players;
     }
+    
+    public function getJugadoresFiltered($filter, $value, $offset, $limit, $sort, $order) {
+        
+        $allowedFilters = ['nombre', 'apellido', 'id_equipo', 'imagen_jugador']; 
+        if (!in_array($filter, $allowedFilters)) {
+            return []; 
+        }
+
+        $query = "SELECT * FROM jugadores WHERE $filter = ? ORDER BY $sort $order LIMIT ? OFFSET ?";
+        $stmt = $this->db->prepare($query);
+    
+       
+        $stmt->bindValue(1, $value, PDO::PARAM_STR);
+        $stmt->bindValue(2, (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(3, (int)$offset, PDO::PARAM_INT);
+    
+        
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+    
+    
     
     
 
