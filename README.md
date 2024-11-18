@@ -101,7 +101,8 @@ se puede editar, eliminar, crear entre algunas opciones.
     "id": 3,
     "equipo": "Napoli",
     "liga": "Serie A",
-    "pais": "Italia"
+    "pais": "Italia",
+    "imagen": "napolii.png"
 }
     ]
 ```
@@ -117,11 +118,11 @@ se puede editar, eliminar, crear entre algunas opciones.
 [
 {
     "id": 3,
-    "nombre": "Ferran ",
-    "apellido": "Torres",
-    "id_equipo": 9
-}
-    ]
+    "nombre": "Earling",
+    "apellido": "Haaland",
+    "id_equipo": 0,
+    "imagen_jugador": "Haaland.png"
+}]
 ```
 
 ### CREAR UN NUEVO EQUIPO
